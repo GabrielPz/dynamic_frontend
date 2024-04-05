@@ -10,7 +10,7 @@ const handleCreateTodo = async () => {
   const categoria = document.getElementById('categoriaTarefa').value;
   const hora = document.getElementById('horaTarefa').value;
 
-  const dateTime = `2023-04-28T${hora}:00`; // Ajuste a data conforme necessário
+  const dateTime = `2023-04-28T${hora}:00`;
 
   const todo = {
       title: titulo,
@@ -34,7 +34,6 @@ const handleCreateTodo = async () => {
   document.getElementById('tituloTarefa').value = '';
   document.getElementById('categoriaTarefa').value = '';
   document.getElementById('horaTarefa').value = '';
-  // Remova a linha que acessa 'tarefaConcluida' aqui
   document.getElementById('salvarTarefa').innerText = 'Salvar'; // Reseta o texto do botão
 };
 
@@ -82,6 +81,8 @@ const updateUI = (todos) => {
     }
 };
 
+
+//Services que realizam o CRUD propriamente dito
 const createTodo = async (todo) => {
     try {
         const response = await fetch(url, {
