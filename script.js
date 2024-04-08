@@ -1,4 +1,3 @@
-
 //TROQUE PELA SUA URL DO CRUDCRUD
 const url = '';
 let currentEditingTodoId = null;
@@ -157,3 +156,34 @@ const toggleTodoDone = async (id, done) => {
         console.error(err);
     }
 };
+
+// Função para exibir a data atual
+function displayDate() {
+    const currentDate = new Date();
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', locale: 'pt-BR'  };
+    document.getElementById('dayOfWeek').innerText = currentDate.toLocaleDateString('pt-BR', { weekday: 'long' });
+    document.getElementById('date').innerText = currentDate.toLocaleDateString('pt-BR', options);
+}
+
+// Função para exibir o horário atual
+function displayTime() {
+    const currentTime = new Date();
+    const hours = currentTime.getHours();
+    const minutes = currentTime.getMinutes();
+
+    // Adiciona um zero à esquerda se o número for menor que 10
+    const formattedHours = hours < 10 ? '0' + hours : hours;
+    const formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
+
+    const currentTimeString = formattedHours + ':' + formattedMinutes;
+
+    document.getElementById('currentTime').innerText = currentTimeString;
+}
+
+// Chamada das funções para exibir a data e o horário quando a página for carregada
+document.addEventListener('DOMContentLoaded', () => {
+    displayDate();
+    displayTime();
+    // Atualiza o horário a cada minuto
+    setInterval(displayTime, 60000);
+});
