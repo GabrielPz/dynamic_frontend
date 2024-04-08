@@ -3,7 +3,7 @@ const url = 'https://crudcrud.com/api/33048d184266486ab4d1cb8bb8062eac/todo';
 let currentEditingTodoId = null;
 
 document.addEventListener('DOMContentLoaded', () => {
-    fetchTodos();
+    // fetchTodos();
 });
 
 const handleCreateTodo = async () => {
@@ -66,7 +66,7 @@ const updateUI = (todos) => {
         const todoElement = `<div class="card my-2">
                                 <div class="card-body rowDirection">
                                     <div class="form-check" style="align-self: center;">
-                                        <input class="form-check-input" type="radio" id="doneSwitch${todo._id}" ${todo.done ? 'checked' : ''}">
+                                        <input class="form-check-input" type="checkbox" id="doneSwitch${todo._id}" ${todo.done ? 'checked' : ''}">
                                     </div>
                                     <div class="columnDirection">
                                         <h5 class="card-title">${todo.title}</h5>
@@ -147,7 +147,7 @@ const toggleTodoDone = async (id, done) => {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ done }),
+            body: JSON.stringify({done: done}),
         });
         if (response.ok) {
             fetchTodos();
