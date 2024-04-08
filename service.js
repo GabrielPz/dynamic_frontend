@@ -1,59 +1,117 @@
-import { post, get, put, del } from 'axios';
-const url = 'https://crudcrud.com/api/eb80a8ac925946fea0594f4a72d8d7fa/todo';
+const url = 'https://crudcrud.com/api/33048d184266486ab4d1cb8bb8062eac/todo';
 
-// Create
-const createTodo = async (title, desc, dateTime) => {
-    const todo = {
-        title: title,
-        desc: desc,
-        dateTime: dateTime,
-        done: false
-    };
+  
+const updateUI = (todos) => {
+    const container = document.getElementById('tasksContainer');
+    container.innerHTML = ''; // Limpa o contêiner
 
+    if (todos.length === 0) {
+        container.innerHTML = `<div class="card mt-2">
+                                    <div class="card-body">
+                                        Ainda não há tarefas para este dia.
+                                    </div>
+                                </div>`;
+        return;
+    } 
+    todos.forEach(todo => {
+        const todoElement = `<div class="card my-2">
+                                <div class="card-body rowDirection">
+                                    <div class="form-check" style="align-self: center;">
+                                        <input class="form-check-input" type="checkbox" id="doneSwitch${todo._id}" ${todo.done ? 'checked' : ''}">
+                                    </div>
+                                    <div class="columnDirection">
+                                        <h5 class="card-title">${todo.title}</h5>
+                                        <div class="rowDirection">
+                                            <p class="card-text">${todo.category}</p>
+                                            <i class="far fa-clock" style="margin-top: 0.25rem;"></i>
+                                            <p class="card-text">${todo.dateTime.slice(11, 16)}</p>
+                                        </div>
+                                    </div>
+                                    <i class="fas fa-edit  text-blue actionButtons" onclick="openEditModal(${JSON.stringify(todo).split('"').join("&quot;")})"></i>
+                                    <i class="fas fa-trash text-red actionButtons" onclick="deleteTodo('${todo._id}')"></i>
+                                </div>
+                            </div>`;
+        container.innerHTML += todoElement;
+    });
+};
+
+  // onchange="toggleTodoDone('${todo._id}', this.checked)
+  
+//Services que realizam o CRUD propriamente dito
+const createTodo = async (todo) => {
     try {
-        const response = await post(url, todo);
-        console.log(response.data);
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(todo),
+        });
+        const data = await response.json();
+        console.log(data);
     } catch(err) {
         console.error(err);
     }
-}
+};
 
-// Read
-const readTodos = async () => {
+const fetchTodos = async () => {
     try {
-        const response = await get(url);
-        console.log(response.data);
+        const response = await fetch(url);
+        const todos = await response.json();
+        updateUI(todos);
     } catch(err) {
         console.error(err);
     }
-}
+};
 
-// Read By ID
-const readById = async (id) => {
-    try {
-        const response = await get(`${url}/${id}`);
-        console.log('Deleted:', id);
-    } catch(err) {
-        console.error(err);
-    }
-}
-
-// Update
 const updateTodo = async (id, updatedTodo) => {
     try {
-        const response = await put(`${url}/${id}`, updatedTodo);
-        console.log(response.data);
+        const response = await fetch(`${url}/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(updatedTodo),
+        });
+        const data = await response.json();
+        console.log(data);
     } catch(err) {
         console.error(err);
     }
-}
+};
 
-// Delete
 const deleteTodo = async (id) => {
     try {
-        const response = await del(`${url}/${id}`);
+        await fetch(`${url}/${id}`, {
+            method: 'DELETE',
+        });
+        await fetchTodos();
         console.log('Deleted:', id);
     } catch(err) {
         console.error(err);
     }
-}
+};
+
+const toggleTodoDone = async (id, done) => {
+    try {
+        const response = await fetch(`${url}/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({done: done}),
+        });
+        if (response.ok) {
+            fetchTodos();
+        } else {
+            throw new Error('Não foi possível atualizar o estado da tarefa');
+        }
+    } catch(err) {
+        console.error(err);
+    }
+};
+
+
+
+window.deleteTodo = deleteTodo;
+export  {toggleTodoDone, updateTodo, createTodo, fetchTodos}
