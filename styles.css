@@ -3,15 +3,36 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem;
-    height: 10vh;
+    height: 10%;
+    width: 100%;
+    color: white;
+}
+
+body{
+    background-image: url('./assets/blackhole.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     width: 100vw;
+    height: 100vh;
+    padding: 1rem;
 }
 
-h6{
-    margin-left: 1rem;
+.rowDirection{
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+}
+.columnDirection{
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
 }
 
-/* body{
-    background: ;
-} */
+.actionButtons{
+    align-self: center;
+    font-size: 1.5rem;
+    margin-left: 2rem;
+}
+.text-blue { color: #007bff; } /* Esta é uma tonalidade de azul. */
+.text-red { color: #dc3545; } /* Esta é uma tonalidade de vermelho. */
