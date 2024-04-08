@@ -1,6 +1,6 @@
 
 //TROQUE PELA SUA URL DO CRUDCRUD
-const url = '';
+const url = 'https://crudcrud.com/api/bf82942d809d42c292b7f93e6e2f8f26/todo';
 let currentEditingTodoId = null;
 
 document.addEventListener('DOMContentLoaded', () => {
