@@ -1,4 +1,4 @@
-const url = 'https://crudcrud.com/api/33048d184266486ab4d1cb8bb8062eac/todo';
+const url = 'https://crudcrud.com/api/6dbc54b41e10492d9dd066e823615b2a/todo';
 
   
 const updateUI = (todos) => {
@@ -28,15 +28,22 @@ const updateUI = (todos) => {
                                         </div>
                                     </div>
                                     <i class="fas fa-edit  text-blue actionButtons" onclick="openEditModal(${JSON.stringify(todo).split('"').join("&quot;")})"></i>
-                                    <i class="fas fa-trash text-red actionButtons" onclick="deleteTodo('${todo._id}')"></i>
+                                    <i class="fas fa-trash text-red actionButtons" onclick="handleDeleteTodo('${todo._id}')"></i>
                                 </div>
                             </div>`;
         container.innerHTML += todoElement;
     });
 };
 
-  // onchange="toggleTodoDone('${todo._id}', this.checked)
-  
+const handleDeleteTodo = async (id) => {
+    const isConfirmed = confirm('Tem certeza que deseja deletar esta tarefa?');
+    if (isConfirmed) {
+        deleteTodo(id);
+        return;
+    } 
+    console.log('Ação de deletar cancelada pelo usuário.');
+};
+
 //Services que realizam o CRUD propriamente dito
 const createTodo = async (todo) => {
     try {
@@ -113,5 +120,5 @@ const toggleTodoDone = async (id, done) => {
 
 
 
-window.deleteTodo = deleteTodo;
+window.handleDeleteTodo = handleDeleteTodo;
 export  {toggleTodoDone, updateTodo, createTodo, fetchTodos}
