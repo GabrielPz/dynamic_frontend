@@ -17,3 +17,22 @@ body{
     height: 100vh;
     padding: 1rem;
 }
+
+.rowDirection{
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+}
+.columnDirection{
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.actionButtons{
+    align-self: center;
+    font-size: 1.5rem;
+    margin-left: 2rem;
+}
+.text-blue { color: #007bff; } /* Esta é uma tonalidade de azul. */
+.text-red { color: #dc3545; } /* Esta é uma tonalidade de vermelho. */

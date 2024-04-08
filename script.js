@@ -64,22 +64,26 @@ const updateUI = (todos) => {
     } 
     todos.forEach(todo => {
         const todoElement = `<div class="card my-2">
-                                    <div class="card-body">
-                                        <h5 class="card-title">${todo.title}</h5>
-                                        <p class="card-text">${todo.category}</p>
-                                        <p class="card-text">${todo.dateTime.slice(11, 16)}</p>
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" id="doneSwitch${todo._id}" ${todo.done ? 'checked' : ''} onchange="toggleTodoDone('${todo._id}', this.checked)">
-                                            <label class="form-check-label" for="doneSwitch${todo._id}">Concluída</label>
-                                        </div>
-                                        <button onclick="openEditModal(${JSON.stringify(todo).split('"').join("&quot;")})" class="btn btn-primary">Editar</button>
-                                        <button onclick="deleteTodo('${todo._id}')" class="btn btn-danger">Excluir</button>
+                                <div class="card-body rowDirection">
+                                    <div class="form-check" style="align-self: center;">
+                                        <input class="form-check-input" type="radio" id="doneSwitch${todo._id}" ${todo.done ? 'checked' : ''}">
                                     </div>
-                                </div>`;
+                                    <div class="columnDirection">
+                                        <h5 class="card-title">${todo.title}</h5>
+                                        <div class="rowDirection">
+                                            <p class="card-text">${todo.category}</p>
+                                            <i class="far fa-clock" style="margin-top: 0.25rem;"></i>
+                                            <p class="card-text">${todo.dateTime.slice(11, 16)}</p>
+                                        </div>
+                                    </div>
+                                    <i class="fas fa-edit  text-blue actionButtons" onclick="openEditModal(${JSON.stringify(todo).split('"').join("&quot;")})"></i>
+                                    <i class="fas fa-trash text-red actionButtons" onclick="deleteTodo('${todo._id}')"></i>
+                                </div>
+                            </div>`;
         container.innerHTML += todoElement;
     });
 };
-
+// onchange="toggleTodoDone('${todo._id}', this.checked)
 
 //Services que realizam o CRUD propriamente dito
 const createTodo = async (todo) => {
