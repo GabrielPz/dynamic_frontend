@@ -2,9 +2,9 @@
 const url = 'https://crudcrud.com/api/33048d184266486ab4d1cb8bb8062eac/todo';
 let currentEditingTodoId = null;
 
-// document.addEventListener('DOMContentLoaded', () => {
-//     fetchTodos();
-// });
+document.addEventListener('DOMContentLoaded', () => {
+    fetchTodos();
+});
 
 const handleCreateTodo = async () => {
   const titulo = document.getElementById('tituloTarefa').value;
@@ -30,7 +30,7 @@ const handleCreateTodo = async () => {
   fetchTodos(); // Atualiza a lista de tarefas
 
   // Fecha a modal e reseta o formulário
-  const modal = bootstrap.Modal.getInstance(document.getElementById('exampleModal'));
+  const modal = bootstrap.Modal.getInstance(document.getElementById('taskModal'));
   modal.hide();
   document.getElementById('tituloTarefa').value = '';
   document.getElementById('categoriaTarefa').value = '';
@@ -43,12 +43,10 @@ const openEditModal = (todo) => {
   currentEditingTodoId = todo._id;
   document.getElementById('tituloTarefa').value = todo.title;
   document.getElementById('categoriaTarefa').value = todo.category;
-  // Assegura que apenas as horas são ajustadas
   document.getElementById('horaTarefa').value = todo.dateTime.slice(11, 16);
-
   document.getElementById('salvarTarefa').innerText = 'Atualizar';
 
-  const modal = new bootstrap.Modal(document.getElementById('exampleModal'));
+  const modal = new bootstrap.Modal(document.getElementById('taskModal'));
   modal.show();
 };
 
@@ -57,29 +55,29 @@ const updateUI = (todos) => {
     container.innerHTML = ''; // Limpa o contêiner
 
     if (todos.length === 0) {
-        container.innerHTML = `<div class="card">
+        container.innerHTML = `<div class="card mt-2">
                                     <div class="card-body">
                                         Ainda não há tarefas para este dia.
                                     </div>
                                 </div>`;
-    } else {
-        todos.forEach(todo => {
-            const todoElement = `<div class="card my-2">
-                                      <div class="card-body">
-                                          <h5 class="card-title">${todo.title}</h5>
-                                          <p class="card-text">${todo.category}</p>
-                                          <p class="card-text">${todo.dateTime.slice(11, 16)}</p>
-                                          <div class="form-check form-switch">
-                                              <input class="form-check-input" type="checkbox" id="doneSwitch${todo._id}" ${todo.done ? 'checked' : ''} onchange="toggleTodoDone('${todo._id}', this.checked)">
-                                              <label class="form-check-label" for="doneSwitch${todo._id}">Concluída</label>
-                                          </div>
-                                          <button onclick="openEditModal(${JSON.stringify(todo).split('"').join("&quot;")})" class="btn btn-primary">Editar</button>
-                                          <button onclick="deleteTodo('${todo._id}')" class="btn btn-danger">Excluir</button>
-                                      </div>
-                                  </div>`;
-            container.innerHTML += todoElement;
-        });
-    }
+        return;
+    } 
+    todos.forEach(todo => {
+        const todoElement = `<div class="card my-2">
+                                    <div class="card-body">
+                                        <h5 class="card-title">${todo.title}</h5>
+                                        <p class="card-text">${todo.category}</p>
+                                        <p class="card-text">${todo.dateTime.slice(11, 16)}</p>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="doneSwitch${todo._id}" ${todo.done ? 'checked' : ''} onchange="toggleTodoDone('${todo._id}', this.checked)">
+                                            <label class="form-check-label" for="doneSwitch${todo._id}">Concluída</label>
+                                        </div>
+                                        <button onclick="openEditModal(${JSON.stringify(todo).split('"').join("&quot;")})" class="btn btn-primary">Editar</button>
+                                        <button onclick="deleteTodo('${todo._id}')" class="btn btn-danger">Excluir</button>
+                                    </div>
+                                </div>`;
+        container.innerHTML += todoElement;
+    });
 };
 
 
@@ -158,7 +156,7 @@ const toggleTodoDone = async (id, done) => {
 };
 
 // Função para exibir a data atual
-function displayDate() {
+const displayDate = () => {
     const currentDate = new Date();
     const options = {year: 'numeric', month: 'long', day: 'numeric', locale: 'pt-BR'  };
     document.getElementById('dayOfWeek').innerText = currentDate.toLocaleDateString('pt-BR', { weekday: 'long' });
@@ -166,7 +164,7 @@ function displayDate() {
 }
 
 // Função para exibir o horário atual
-function displayTime() {
+const displayTime = () => {
     const currentTime = new Date();
     const hours = currentTime.getHours();
     const minutes = currentTime.getMinutes();
