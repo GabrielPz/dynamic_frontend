@@ -1,10 +1,10 @@
 //TROQUE PELA SUA URL DO CRUDCRUD
-const url = 'https://crudcrud.com/api/bf82942d809d42c292b7f93e6e2f8f26/todo';
+const url = 'https://crudcrud.com/api/33048d184266486ab4d1cb8bb8062eac/todo';
 let currentEditingTodoId = null;
 
-document.addEventListener('DOMContentLoaded', () => {
-    fetchTodos();
-});
+// document.addEventListener('DOMContentLoaded', () => {
+//     fetchTodos();
+// });
 
 const handleCreateTodo = async () => {
   const titulo = document.getElementById('tituloTarefa').value;
@@ -160,7 +160,7 @@ const toggleTodoDone = async (id, done) => {
 // Função para exibir a data atual
 function displayDate() {
     const currentDate = new Date();
-    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', locale: 'pt-BR'  };
+    const options = {year: 'numeric', month: 'long', day: 'numeric', locale: 'pt-BR'  };
     document.getElementById('dayOfWeek').innerText = currentDate.toLocaleDateString('pt-BR', { weekday: 'long' });
     document.getElementById('date').innerText = currentDate.toLocaleDateString('pt-BR', options);
 }
